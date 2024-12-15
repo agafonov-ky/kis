@@ -3,7 +3,7 @@ from odoo import fields, models, api
 
 class OperationCompletedProduct(models.Model):
     _name = 'operation.completed.product'
-    _description = 'Готовая продукция'
+    _description = 'Проверенная продукция'
 
     operation_id = fields.Many2one('operation', string='Операция')
     user_id = fields.Many2one('res.users', 'Пользователь', default=lambda self: self.env.user)
