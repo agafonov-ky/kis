@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_operation_group_user,access_operation,kis.model_operation,base.group_user,1,1,1,1
+access_product_group_user,access_product,kis.model_product,base.group_user,1,1,1,1
+access_operation_type_group_user,access_operation_type,kis.model_operation_type,base.group_user,1,1,1,1
+access_operation_type_line_group_user,access_operation_type_line,kis.model_operation_type_line,base.group_user,1,1,1,1
+access_work_center_group_user,access_work_center,kis.model_work_center,base.group_user,1,1,1,1
+access_operation_time_group_user,access_operation_time,kis.model_operation_time,base.group_user,1,1,1,1
+access_operation_completed_product_group_user,access_operation_completed_product,kis.model_operation_completed_product,base.group_user,1,1,1,1

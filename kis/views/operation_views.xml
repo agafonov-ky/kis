@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="operation_form_view" model="ir.ui.view">
+            <field name="name">operation_form_view</field>
+            <field name="model">operation</field>
+            <field name="arch" type="xml">
+                <form string="Операция">
+                    <header>
+                        <button name="create_operation" type="object" string="Получить операции"/>
+                        <button name="action_set_state_in_process" type="object" class="btn-info" string="Начать" invisible="state != 'draft'"/>
+                        <button name="action_set_state_done" type="object" class="btn-success" string="Выполнить" invisible="state != 'in_process'"/>
+                        <button name="action_set_state_cancelled" type="object" class="btn-danger" string="Отменить" invisible="state in ['done', 'cancelled']"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Наименование"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="priority"/>
+                                <field name="manufacturing_type"/>
+                                <field name="product_id"/>
+                                <field name="work_center"/>
+                                <field name="type"/>
+                                <field name="quantity"/>
+                                <field name="sample_quantity"/>
+                            </group>
+                            <group>
+                                <field name="date_get_in_work"/>
+                                <field name="date_start_plan"/>
+                                <field name="date_end_plan"/>
+                                <field name="date_start_fact" readonly="True" force_save="1"/>
+                                <field name="date_end_fact" readonly="True" force_save="1"/>
+                                <br/><br/>
+                                <field name="comment"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Проверенная продукция">
+                                <field name="completed_product_ids">
+                                    <tree editable="bottom">
+                                        <field name="user_id"/>
+                                        <field name="date"/>
+                                        <field name="quantity"/>
+                                        <field name="state" required="True"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="История выполнения">
+                                <field name="time_ids">
+                                    <tree editable="bottom">
+                                        <field name="user_id"/>
+                                        <field name="duration" widget="float_time"/>
+                                        <field name="time_start"/>
+                                        <field name="time_end"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="operation_tree_view" model="ir.ui.view">
+            <field name="name">operation_tree_view</field>
+            <field name="model">operation</field>
+            <field name="arch" type="xml">
+                <tree string="Операции">
+                    <field name="priority"/>
+                    <field name="product_id"/>
+                    <field name="work_center"/>
+                    <field name="type"/>
+                    <field name="quantity"/>
+                    <field name="sample_quantity"/>
+                    <field name="state" widget="badge" decoration-muted="state == 'draft'" decoration-warning="state == 'in_process'" decoration-success="state == 'done'" decoration-danger="state == 'cancelled'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="operation_search_view" model="ir.ui.view">
+            <field name="name">operation_search_view</field>
+            <field name="model">operation</field>
+            <field name="arch" type="xml">
+                <search string="Операции">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="operation_view_kanban" model="ir.ui.view">
+            <field name="name">operation_view_kanban</field>
+            <field name="model">operation</field>
+            <field name="arch" type="xml">
+                <kanban sample="1" js_class="button_in_kanban" on_create="quick_create" class="o_kanban_mobile oe_background_grey o_kanban_dashboard" quick_create="True" default_group_by="manufacturing_type" group_create="True" limit="10">>
+                    <field name="id"/>
+                    <field name="priority"/>
+                    <field name="manufacturing_type"/>
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="work_center"/>
+                    <field name="type"/>
+                    <field name="quantity"/>
+                    <field name="sample_quantity" />
+                    <templates>
+                        <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top mb8 mr8">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title">
+                                            <t t-esc="record.name.raw_value"/>
+                                        </strong>
+                                    </div>
+                                    <strong>
+                                        <field name="state" widget="badge" class="ms-auto" decoration-muted="state == 'draft'" decoration-warning="state == 'in_process'" decoration-success="state == 'done'" decoration-danger="state == 'cancelled'"/>
+                                    </strong>
+                                </div>
+                                <ul>
+                                    <li>
+                                        Количество: <t t-esc="record.quantity.raw_value"/> шт
+                                    </li>
+                                    <li>
+                                        К проверке: <t t-esc="record.sample_quantity.raw_value"/> шт
+                                    </li>
+                                    <br/>
+                                </ul>
+                                <div class="oe_kanban_content position-absolute start-0 bottom-0 end-0 me-2">
+                                    <div class="o_kanban_record_bottom mt-3">
+                                        <div class="oe_kanban_bottom_left"/>
+                                        <div class="oe_kanban_bottom_right">
+                                            <div class="mb-1 ms-2 me-n1">
+                                                <b><field name="type"/></b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="operation_act_window" model="ir.actions.act_window">
+            <field name="name">Операции</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">operation</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Не найдено ни одной записи
+                </p>
+            </field>
+        </record>
+
+        <record id="dashboard_operation_act_window" model="ir.actions.act_window">
+            <field name="name">Дашбоард</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">operation</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Не найдено ни одной записи
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="main_kis" sequence="100" name="ОТК">
+            <menuitem id="operations" sequence="100" name="Операции">
+                <menuitem id="operations_dashboard" sequence="100" name="Дашборд" action="kis.dashboard_operation_act_window"/>
+                <menuitem id="operations_tree" sequence="200" name="Список операций" action="kis.operation_act_window"/>
+            </menuitem>
+            <menuitem id="nsi" sequence="1000" name="НСИ">
+                <menuitem id="product_tree" sequence="100" name="Продукты" action="kis.product_act_window"/>
+                <menuitem id="operation_type_tree" sequence="200" name="Типы операций" action="kis.operation_type_act_window"/>
+                <menuitem id="work_center_tree" sequence="300" name="Рабочие центры" action="kis.work_center_act_window"/>
+            </menuitem>
+        </menuitem>
+
+    </data>
+</odoo>
