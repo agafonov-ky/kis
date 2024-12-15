@@ -2,6 +2,16 @@
 <odoo>
     <data>
 
+        <record id="get_operations" model="ir.cron">
+            <field name="name">Получить операции</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_operation"/>
+            <field name="code">model.create_operation()</field>
+            <field name="state">code</field>
+        </record>
 
     </data>
 </odoo>

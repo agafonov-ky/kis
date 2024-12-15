@@ -15,6 +15,7 @@
         'views/operation_type_views.xml',
         'views/work_center_views.xml',
         'views/menus.xml',
+        'data/servet_action.xml',
     ],
     'installable': True,
     'application': True,
