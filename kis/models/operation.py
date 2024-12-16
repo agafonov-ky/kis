@@ -4,8 +4,6 @@ import requests
 
 from odoo import fields, models, api
 
-URL = "https://ri.forban.tech/web/dataset/call_kw/mrp.workorder/web_search_read"
-
 
 class Operation(models.Model):
     _name = 'operation'
@@ -41,12 +39,7 @@ class Operation(models.Model):
 
     def create_operation(self):
 
-        cookies = {
-            '_ym_uid': '1687759526803437176',
-            'cids': '1',
-            'session_id': 'df92a0a72b5c62c90b6d9731c6e61c41f6b7e22d',
-            '_ym_d': '1723039502',
-        }
+        cookies = COOKIES
 
         headers = {
             'Accept': '*/*',
